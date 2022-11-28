@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-#include "cells.h"
 #include "grid.h"
+#include "cells.h"
 #include "gamestate.h"
 
 
