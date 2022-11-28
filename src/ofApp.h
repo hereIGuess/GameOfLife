@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "grid.h"
+#include "gamestate.h"
 
 class ofApp : public ofBaseApp{
 
@@ -23,4 +24,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		Grid pixelGrid = Grid();
+		GameState gameState = GameState();
 };
