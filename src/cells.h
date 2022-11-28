@@ -52,37 +52,35 @@ public:
 	}
 
 	void checkLife(int x, int y) {
-		if (x == 0 || x == columns - 1 || y == 0 || y == rows - 1) return;
-
 		int aliveNeighbours = 0;
 		bool alive = cells[y][x];
 
 		if (alive) {
-			if (cells[y - 1][x - 1]) aliveNeighbours++;
-			if (cells[y - 1][x]) aliveNeighbours++;
-			if (cells[y - 1][x + 1]) aliveNeighbours++;
-			if (cells[y][x - 1]) aliveNeighbours++;
-			if (cells[y][x + 1]) aliveNeighbours++;
-			if (cells[y + 1][x - 1]) aliveNeighbours++;
-			if (cells[y + 1][x]) aliveNeighbours++;
-			if (cells[y + 1][x + 1]) aliveNeighbours++;
+			if (x > 0 && y > 0 && cells[y - 1][x - 1]) aliveNeighbours++;
+			if (y > 0 && cells[y - 1][x]) aliveNeighbours++;
+			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1]) aliveNeighbours++;
+			if (x > 0 && cells[y][x - 1]) aliveNeighbours++;
+			if (x < columns - 1 && cells[y][x + 1]) aliveNeighbours++;
+			if (x > 0 && y < rows - 1 && cells[y + 1][x - 1]) aliveNeighbours++;
+			if (x < columns - 1 && y < rows - 1 && cells[y + 1][x + 1]) aliveNeighbours++;
+			if (y < rows - 1 && cells[y + 1][x]) aliveNeighbours++;
 
 			if (aliveNeighbours > 3) newGen[y][x] = false;
 			else if (aliveNeighbours < 2) newGen[y][x] = false;
 			else newGen[y][x] = true;
 		}
 		else if (!alive) {
-			if (cells[y - 1][x - 1]) aliveNeighbours++;
-			if (cells[y - 1][x]) aliveNeighbours++;
-			if (cells[y - 1][x + 1]) aliveNeighbours++;
-			if (cells[y][x - 1]) aliveNeighbours++;
-			if (cells[y][x + 1]) aliveNeighbours++;
-			if (cells[y + 1][x - 1]) aliveNeighbours++;
-			if (cells[y + 1][x]) aliveNeighbours++;
-			if (cells[y + 1][x + 1]) aliveNeighbours++;
+			if (x > 0 && y > 0 && cells[y - 1][x - 1]) aliveNeighbours++;
+			if (y > 0 && cells[y - 1][x]) aliveNeighbours++;
+			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1]) aliveNeighbours++;
+			if (x > 0 && cells[y][x - 1]) aliveNeighbours++;
+			if (x < columns - 1 && cells[y][x + 1]) aliveNeighbours++;
+			if (x > 0 && y < rows - 1 && cells[y + 1][x - 1]) aliveNeighbours++;
+			if (x < columns - 1 && y < rows - 1 && cells[y + 1][x + 1]) aliveNeighbours++;
+			if (y < rows - 1 && cells[y + 1][x]) aliveNeighbours++;
 
 			if (aliveNeighbours == 3) newGen[y][x] = true;
-			else newGen[y][x] = false;
+			//else newGen[y][x] = false;
 		}
 	}
 

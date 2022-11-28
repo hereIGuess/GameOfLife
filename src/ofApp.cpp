@@ -12,8 +12,6 @@ void ofApp::update(){
 
 	if (!gameState.getGameState()) {
 		cells.update();
-
-		std::cout << "Update\n";
 	}
 }
 
