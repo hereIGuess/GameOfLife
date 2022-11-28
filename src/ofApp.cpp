@@ -9,16 +9,22 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	ofSetWindowShape(pixelGrid.width(), pixelGrid.height());
+
+	if (!gameState.getGameState()) {
+		cells.update();
+
+		std::cout << "Update\n";
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	pixelGrid.draw();
+	cells.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	gameState.setGameState(false);
 }
 
 //--------------------------------------------------------------
@@ -38,7 +44,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	pixelGrid.update(x, y);
+	if (gameState.getGameState()) {
+		cells.seeds(x, y);
+	}
 }
 
 //--------------------------------------------------------------
