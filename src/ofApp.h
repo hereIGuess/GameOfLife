@@ -1,8 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include "cells.h"
 #include "grid.h"
 #include "gamestate.h"
+
 
 class ofApp : public ofBaseApp{
 
@@ -23,6 +25,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		Cells cells = Cells();
 		Grid pixelGrid = Grid();
 		GameState gameState = GameState();
 };

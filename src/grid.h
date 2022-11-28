@@ -1,21 +1,10 @@
 #pragma once
 
-class Grid {
+class Grid : public Cells {
 private:
-	int rows = 50;
-	int columns = 50;
-	int pixelSize = 10;
-	std::vector<std::vector<bool>> pixels;
 
 public:
 	Grid() {
-		for (int x = 0; x < columns; x++) {
-			vector<bool> temp;
-			for (int y = 0; y < rows; y++) {
-				temp.push_back(false);
-			}
-			pixels.push_back(temp);
-		}
 	}
 
 	int height() {
@@ -31,11 +20,11 @@ public:
 			for (int y = 0; y < rows; y++) {
 				if (mouseX > x * pixelSize && mouseX < (x * pixelSize) + pixelSize &&
 					mouseY > y * pixelSize && mouseY < (y * pixelSize) + pixelSize) {
-					if (bool pixel = pixels[y][x]) {
-						pixels[y][x] = false;
+					if (bool pixel = cells[y][x]) {
+						cells[y][x] = false;
 					}
 					else {
-						pixels[y][x] = true;
+						cells[y][x] = true;
 					}
 				}
 			}
@@ -45,7 +34,7 @@ public:
 	void draw() {
 		for (int x = 0; x < columns; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (bool pixel = pixels[y][x]) {
+				if (bool pixel = cells[y][x]) {
 					ofSetColor(0);
 					ofFill();
 					ofSetLineWidth(0);
@@ -60,5 +49,4 @@ public:
 			}
 		}
 	}
-
 };
