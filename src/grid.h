@@ -4,9 +4,9 @@ class Grid {
 private:
 
 public:
-	const int& rows = 20;
-	const int& columns = 20;
-	const int& pixelSize = 30;
+	const int& rows = 40;
+	const int& columns = 40;
+	const int& pixelSize = 20;
 
 	Grid() {
 
