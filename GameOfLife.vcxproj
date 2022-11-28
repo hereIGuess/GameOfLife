@@ -194,6 +194,7 @@
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\cells.h" />
     <ClInclude Include="src\gamestate.h" />
     <ClInclude Include="src\grid.h" />
     <ClInclude Include="src\ofApp.h" />
