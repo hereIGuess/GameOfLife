@@ -29,6 +29,11 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	if (key == 114 && gameState.getGameState()) {
+		cells.randomSeed();
+		iteration = 0;
+	}
+
 	if (key == 99) {
 		gameState.setGameState(true);
 		iteration = 0;
