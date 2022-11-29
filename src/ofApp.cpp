@@ -1,5 +1,11 @@
 #include "ofApp.h"
 
+//CONTROLS:
+//Space to play/pause
+//C to clear canvas
+//R to create a random seed
+//Button in lower left can only be pressed when game is paused
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(255);
@@ -10,6 +16,10 @@ void ofApp::setup(){
 	frameRate.setPosition(pixelGrid.width() / 2, pixelGrid.height() + 10);
 
 	frameRate.addListener(this, &ofApp::frameRateChanged);
+
+	nextGen.setup("Next Gen", 100, 20);
+	nextGen.setPosition(20, pixelGrid.height() + 10);
+	nextGen.addListener(this, &ofApp::nextGenButton);
 }
 
 //--------------------------------------------------------------
@@ -31,6 +41,7 @@ void ofApp::draw(){
 	ofDrawBitmapString("Iteration: " + std::to_string(iteration), pixelGrid.width() - 200, pixelGrid.height() + 20);
 	ofDrawBitmapString(gameState.getText(), 200, pixelGrid.height() + 20);
 	frameRate.draw();
+	nextGen.draw();
 }
 
 //--------------------------------------------------------------
@@ -61,6 +72,13 @@ void ofApp::keyPressed(int key){
 
 void ofApp::frameRateChanged(int& frameRate){
 	frameSpeed = frameRate;
+}
+
+void ofApp::nextGenButton(){
+	if (gameState.getGameState()) {
+		cells.update();
+		iteration++;
+	}
 }
 
 //--------------------------------------------------------------

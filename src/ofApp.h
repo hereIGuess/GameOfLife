@@ -26,8 +26,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		ofxIntSlider frameRate;
 		void frameRateChanged(int& frameRate);
 		int frameSpeed = 4;
+
+		ofxButton nextGen;
+		void nextGenButton();
 
 		Cells cells = Cells();
 		Grid pixelGrid = Grid();
@@ -35,5 +39,4 @@ class ofApp : public ofBaseApp{
 
 		int iteration = 0;
 
-		ofxIntSlider frameRate;
 };
