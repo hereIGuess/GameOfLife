@@ -2,15 +2,17 @@
 
 class Cells : public Grid {
 private:
-	std::vector<std::vector<bool>> cells;
-	std::vector<std::vector<bool>> newGen;
+	enum class State { Dead, Alive };
+
+	std::vector<std::vector<State>> cells;
+	std::vector<std::vector<State>> newGen;
 
 public:
 	Cells() {
 		for (int x = 0; x < columns; x++) {
-			vector<bool> temp;
+			vector<State> temp;
 			for (int y = 0; y < rows; y++) {
-				temp.push_back(false);
+				temp.push_back(State::Dead);
 			}
 			cells.push_back(temp);
 		}
@@ -21,11 +23,11 @@ public:
 			for (int y = 0; y < rows; y++) {
 				if (mouseX > x * pixelSize && mouseX < (x * pixelSize) + pixelSize &&
 					mouseY > y * pixelSize && mouseY < (y * pixelSize) + pixelSize) {
-					if (bool pixel = cells[y][x]) {
-						cells[y][x] = false;
+					if (cells[y][x] == State::Alive) {
+						cells[y][x] = State::Dead;
 					}
 					else {
-						cells[y][x] = true;
+						cells[y][x] = State::Alive;
 					}
 				}
 			}
@@ -33,7 +35,7 @@ public:
 	}
 
 	void update() {
-		newGen.resize(rows, std::vector<bool>(columns, false));
+		newGen.resize(rows, std::vector<State>(columns, State::Dead));
 
 		for (int x = 0; x < columns; x++) {
 			for (int y = 0; y < rows; y++) {
@@ -46,33 +48,33 @@ public:
 
 	void checkLife(int x, int y) {
 		int aliveNeighbours = 0;
-		bool alive = cells[y][x];
+		State currentState = cells[y][x];
 
-		if (alive) {
-			if (x > 0 && y > 0 && cells[y - 1][x - 1]) aliveNeighbours++;
-			if (y > 0 && cells[y - 1][x]) aliveNeighbours++;
-			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1]) aliveNeighbours++;
-			if (x > 0 && cells[y][x - 1]) aliveNeighbours++;
-			if (x < columns - 1 && cells[y][x + 1]) aliveNeighbours++;
-			if (x > 0 && y < rows - 1 && cells[y + 1][x - 1]) aliveNeighbours++;
-			if (x < columns - 1 && y < rows - 1 && cells[y + 1][x + 1]) aliveNeighbours++;
-			if (y < rows - 1 && cells[y + 1][x]) aliveNeighbours++;
+		if (currentState == State::Alive) {
+			if (x > 0 && y > 0 && cells[y - 1][x - 1] == State::Alive) aliveNeighbours++;
+			if (y > 0 && cells[y - 1][x] == State::Alive) aliveNeighbours++;
+			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1] == State::Alive) aliveNeighbours++;
+			if (x > 0 && cells[y][x - 1] == State::Alive) aliveNeighbours++;
+			if (x < columns - 1 && cells[y][x + 1] == State::Alive) aliveNeighbours++;
+			if (x > 0 && y < rows - 1 && cells[y + 1][x - 1] == State::Alive) aliveNeighbours++;
+			if (x < columns - 1 && y < rows - 1 && cells[y + 1][x + 1] == State::Alive) aliveNeighbours++;
+			if (y < rows - 1 && cells[y + 1][x] == State::Alive) aliveNeighbours++;
 
-			if (aliveNeighbours > 3) newGen[y][x] = false;
-			else if (aliveNeighbours < 2) newGen[y][x] = false;
-			else newGen[y][x] = true;
+			if (aliveNeighbours > 3) newGen[y][x] = State::Dead;
+			else if (aliveNeighbours < 2) newGen[y][x] = State::Dead;
+			else newGen[y][x] = State::Alive;
 		}
-		else if (!alive) {
-			if (x > 0 && y > 0 && cells[y - 1][x - 1]) aliveNeighbours++;
-			if (y > 0 && cells[y - 1][x]) aliveNeighbours++;
-			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1]) aliveNeighbours++;
-			if (x > 0 && cells[y][x - 1]) aliveNeighbours++;
-			if (x < columns - 1 && cells[y][x + 1]) aliveNeighbours++;
-			if (x > 0 && y < rows - 1 && cells[y + 1][x - 1]) aliveNeighbours++;
-			if (x < columns - 1 && y < rows - 1 && cells[y + 1][x + 1]) aliveNeighbours++;
-			if (y < rows - 1 && cells[y + 1][x]) aliveNeighbours++;
+		else if (currentState == State::Dead) {
+			if (x > 0 && y > 0 && cells[y - 1][x - 1] == State::Alive) aliveNeighbours++;
+			if (y > 0 && cells[y - 1][x] == State::Alive) aliveNeighbours++;
+			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1] == State::Alive) aliveNeighbours++;
+			if (x > 0 && cells[y][x - 1] == State::Alive) aliveNeighbours++;
+			if (x < columns - 1 && cells[y][x + 1] == State::Alive) aliveNeighbours++;
+			if (x > 0 && y < rows - 1 && cells[y + 1][x - 1] == State::Alive) aliveNeighbours++;
+			if (x < columns - 1 && y < rows - 1 && cells[y + 1][x + 1] == State::Alive) aliveNeighbours++;
+			if (y < rows - 1 && cells[y + 1][x] == State::Alive) aliveNeighbours++;
 
-			if (aliveNeighbours == 3) newGen[y][x] = true;
+			if (aliveNeighbours == 3) newGen[y][x] = State::Alive;
 			//else newGen[y][x] = false;
 		}
 	}
@@ -80,7 +82,7 @@ public:
 	void draw() {
 		for (int x = 0; x < columns; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (bool pixel = cells[y][x]) {
+				if (cells[y][x] == State::Alive) {
 					ofSetColor(0);
 					ofFill();
 					ofSetLineWidth(0);
