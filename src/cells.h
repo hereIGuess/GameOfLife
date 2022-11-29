@@ -19,6 +19,17 @@ public:
 		newGen.resize(rows, std::vector<State>(columns, State::Dead));
 	}
 
+	void randomSeed() {
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < columns; x++) {
+				int random = floor(ofRandom(0, 2));
+
+				if (random == 1) cells[y][x] = State::Alive;
+				else cells[y][x] = State::Dead;
+			}
+		}
+	}
+
 	void seeds(int mouseX, int mouseY) {
 		for (int x = 0; x < columns; x++) {
 			for (int y = 0; y < rows; y++) {
