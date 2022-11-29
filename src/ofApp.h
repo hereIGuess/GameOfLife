@@ -28,4 +28,6 @@ class ofApp : public ofBaseApp{
 		Cells cells = Cells();
 		Grid pixelGrid = Grid();
 		GameState gameState = GameState();
+
+		int iteration = 0;
 };
