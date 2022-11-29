@@ -7,7 +7,13 @@ private:
 	std::vector<std::vector<State>> cells;
 	std::vector<std::vector<State>> newGen;
 
+	int iteration;
+
 public:
+	int getIteration() {
+		return iteration;
+	}
+
 	Cells() {
 		clear();
 	}
@@ -17,6 +23,8 @@ public:
 		cells.resize(rows, std::vector<State>(columns, State::Dead));
 		newGen.resize(0);
 		newGen.resize(rows, std::vector<State>(columns, State::Dead));
+
+		iteration = 0;
 	}
 
 	void randomSeed() {
@@ -56,6 +64,7 @@ public:
 		}
 
 		cells = newGen;
+		iteration++;
 	}
 
 	void checkLife(int x, int y) {

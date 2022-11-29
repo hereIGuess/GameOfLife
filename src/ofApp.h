@@ -48,7 +48,4 @@ class ofApp : public ofBaseApp{
 
 		ofRectangle settingsArea = ofRectangle(0, grid.height(), grid.width(), 80);
 		ofRectangle textArea;
-
-		int iteration = 0;
-
 };
