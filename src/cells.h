@@ -9,13 +9,14 @@ private:
 
 public:
 	Cells() {
-		for (int x = 0; x < columns; x++) {
-			vector<State> temp;
-			for (int y = 0; y < rows; y++) {
-				temp.push_back(State::Dead);
-			}
-			cells.push_back(temp);
-		}
+		clear();
+	}
+
+	void clear() {
+		cells.resize(0);
+		cells.resize(rows, std::vector<State>(columns, State::Dead));
+		newGen.resize(0);
+		newGen.resize(rows, std::vector<State>(columns, State::Dead));
 	}
 
 	void seeds(int mouseX, int mouseY) {
@@ -48,9 +49,8 @@ public:
 
 	void checkLife(int x, int y) {
 		int aliveNeighbours = 0;
-		State currentState = cells[y][x];
 
-		if (currentState == State::Alive) {
+		if (cells[y][x] == State::Alive) {
 			if (x > 0 && y > 0 && cells[y - 1][x - 1] == State::Alive) aliveNeighbours++;
 			if (y > 0 && cells[y - 1][x] == State::Alive) aliveNeighbours++;
 			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1] == State::Alive) aliveNeighbours++;
@@ -64,7 +64,7 @@ public:
 			else if (aliveNeighbours < 2) newGen[y][x] = State::Dead;
 			else newGen[y][x] = State::Alive;
 		}
-		else if (currentState == State::Dead) {
+		else if (cells[y][x] == State::Dead) {
 			if (x > 0 && y > 0 && cells[y - 1][x - 1] == State::Alive) aliveNeighbours++;
 			if (y > 0 && cells[y - 1][x] == State::Alive) aliveNeighbours++;
 			if (y > 0 && x < columns - 1 && cells[y - 1][x + 1] == State::Alive) aliveNeighbours++;
@@ -75,7 +75,6 @@ public:
 			if (y < rows - 1 && cells[y + 1][x] == State::Alive) aliveNeighbours++;
 
 			if (aliveNeighbours == 3) newGen[y][x] = State::Alive;
-			//else newGen[y][x] = false;
 		}
 	}
 

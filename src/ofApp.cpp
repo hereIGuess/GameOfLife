@@ -29,13 +29,23 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
-	if (gameState.getGameState()) {
-		gameState.setGameState(false);
-		ofSetFrameRate(1);
-	} else if (!gameState.getGameState()) {
+	if (key == 99) {
 		gameState.setGameState(true);
+		iteration = 0;
+		cells.clear();
+		key = 0;
 		ofSetFrameRate(30);
+	}
+
+	if (key == 32) {
+		if (gameState.getGameState()) {
+			gameState.setGameState(false);
+			ofSetFrameRate(1);
+		}
+		else if (!gameState.getGameState()) {
+			gameState.setGameState(true);
+			ofSetFrameRate(30);
+		}
 	}
 }
 
