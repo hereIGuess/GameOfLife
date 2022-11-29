@@ -4,6 +4,7 @@
 #include "grid.h"
 #include "cells.h"
 #include "gamestate.h"
+#include "ofxGui.h"
 
 
 class ofApp : public ofBaseApp{
@@ -25,9 +26,14 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		void frameRateChanged(int& frameRate);
+		int frameSpeed = 4;
+
 		Cells cells = Cells();
 		Grid pixelGrid = Grid();
 		GameState gameState = GameState();
 
 		int iteration = 0;
+
+		ofxIntSlider frameRate;
 };
