@@ -15,12 +15,12 @@ void ofApp::setup(){
 	gridSetup.setup("Grid Settings:");
 	gridSetup.add(columns.setup("Number of Columns:", 40, 30, 80));
 	gridSetup.add(rows.setup("Number of Rows:", 40, 20, 60));
-	gridSetup.setSize(200, 40);
+	gridSetup.setSize(180, 40);
 
 	frameSetup.setup("Frame Settings:");
 	frameSetup.add(framerate.setup("Set Framerate:", 4, 1, 8));
 	frameSetup.add(nextGen.setup("Next Gen"));
-	gridSetup.setSize(200, 40);
+	frameSetup.setSize(160, 40);
 
 	framerate.addListener(this, &ofApp::framerateChanged);
 	nextGen.addListener(this, &ofApp::nextGenButton);
@@ -28,9 +28,9 @@ void ofApp::setup(){
 	rows.addListener(this, &ofApp::rowsChanged);
 
 	gridSetup.setPosition(grid.pixelSize, settingsArea.y + 10);
-	frameSetup.setPosition(frameSetup.getWidth() + grid.pixelSize * 2, settingsArea.y + 10);
+	frameSetup.setPosition(gridSetup.getWidth() + grid.pixelSize * 2, settingsArea.y + 10);
 
-	textArea = ofRectangle(gridSetup.getWidth() + frameSetup.getWidth() + grid.pixelSize * 3, grid.height() + 10, 120, 60);
+	textArea = ofRectangle(gridSetup.getWidth() + frameSetup.getWidth() + grid.pixelSize * 3, settingsArea.getY() + settingsArea.getHeight() / 2 - 30, 180, 60);
 }
 
 //--------------------------------------------------------------
@@ -40,7 +40,6 @@ void ofApp::update(){
 	if (!gameState.getGameState()) {
 		cells.update();
 		ofSetFrameRate(currentFramerate);
-		iteration++;
 	}
 }
 
@@ -55,9 +54,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 	ofDrawRectangle(textArea);
 
-	std::string iterationText = "Iteration: " + std::to_string(iteration);
+	std::string iterationText = "Iteration: " + std::to_string(cells.getIteration());
 	std::string gameStateText = "Game State: " + gameState.getText();
-	textArea.setWidth(gameStateText.length() * 10 + 10);
 
 	ofSetColor(0);
 	ofDrawBitmapString(iterationText, textArea.getX() + textArea.getWidth() / 2 - iterationText.length() * 4,  textArea.getY() + 20);
@@ -100,7 +98,6 @@ void ofApp::framerateChanged(int& framerate){
 void ofApp::nextGenButton(){
 	if (gameState.getGameState()) {
 		cells.update();
-		iteration++;
 	}
 }
 
@@ -115,9 +112,10 @@ void ofApp::rowsChanged(int& rows) {
 	grid.setRows(rows);
 	cells.rows = rows;
 	cells.clear();
-	textArea.setY(grid.height());
-	gridSetup.setPosition(gridSetup.getWidth() / 10, settingsArea.y + gridSetup.getHeight() / 4);
-	frameSetup.setPosition(frameSetup.getWidth() + frameSetup.getWidth() / 10 * 2, settingsArea.y + frameSetup.getHeight() / 4);
+	settingsArea.setY(grid.height());
+	textArea.setY(settingsArea.getY() + settingsArea.getHeight() / 2 - 30);
+	gridSetup.setPosition(grid.pixelSize, settingsArea.y + 10);
+	frameSetup.setPosition(gridSetup.getWidth() + grid.pixelSize * 2, settingsArea.y + 10);
 }
 
 //--------------------------------------------------------------
