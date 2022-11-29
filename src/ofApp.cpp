@@ -3,26 +3,40 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(255);
-	ofSetFrameRate(4);
+
+	ofSetFrameRate(30);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	ofSetWindowShape(pixelGrid.width(), pixelGrid.height());
-
+	ofSetWindowShape(pixelGrid.width(), pixelGrid.height() + 40);
+	 
 	if (!gameState.getGameState()) {
 		cells.update();
+
+		iteration++;
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 	cells.draw();
+
+	ofSetColor(0);
+	ofDrawBitmapString("Iteration: " + std::to_string(iteration), pixelGrid.width() - 200, pixelGrid.height() + 20);
+	ofDrawBitmapString(gameState.getText(), 200, pixelGrid.height() + 20);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	gameState.setGameState(false);
+
+	if (gameState.getGameState()) {
+		gameState.setGameState(false);
+		ofSetFrameRate(1);
+	} else if (!gameState.getGameState()) {
+		gameState.setGameState(true);
+		ofSetFrameRate(30);
+	}
 }
 
 //--------------------------------------------------------------

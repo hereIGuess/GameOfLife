@@ -5,8 +5,6 @@ private:
 	std::vector<std::vector<bool>> cells;
 	std::vector<std::vector<bool>> newGen;
 
-	bool isUpdating = false;
-
 public:
 	Cells() {
 		for (int x = 0; x < columns; x++) {
@@ -35,10 +33,6 @@ public:
 	}
 
 	void update() {
-		if (isUpdating) return;
-
-		isUpdating = true;
-
 		newGen.resize(rows, std::vector<bool>(columns, false));
 
 		for (int x = 0; x < columns; x++) {
@@ -48,7 +42,6 @@ public:
 		}
 
 		cells = newGen;
-		isUpdating = false;
 	}
 
 	void checkLife(int x, int y) {
