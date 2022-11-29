@@ -5,6 +5,11 @@ void ofApp::setup(){
 	ofBackground(255);
 
 	ofSetFrameRate(30);
+
+	frameRate.setup("Framerate: ", 4, 1, 8, 125, 20);
+	frameRate.setPosition(pixelGrid.width() / 2, pixelGrid.height() + 10);
+
+	frameRate.addListener(this, &ofApp::frameRateChanged);
 }
 
 //--------------------------------------------------------------
@@ -13,7 +18,7 @@ void ofApp::update(){
 	 
 	if (!gameState.getGameState()) {
 		cells.update();
-
+		ofSetFrameRate(frameSpeed);
 		iteration++;
 	}
 }
@@ -25,6 +30,7 @@ void ofApp::draw(){
 	ofSetColor(0);
 	ofDrawBitmapString("Iteration: " + std::to_string(iteration), pixelGrid.width() - 200, pixelGrid.height() + 20);
 	ofDrawBitmapString(gameState.getText(), 200, pixelGrid.height() + 20);
+	frameRate.draw();
 }
 
 //--------------------------------------------------------------
@@ -45,13 +51,16 @@ void ofApp::keyPressed(int key){
 	if (key == 32) {
 		if (gameState.getGameState()) {
 			gameState.setGameState(false);
-			ofSetFrameRate(1);
 		}
 		else if (!gameState.getGameState()) {
 			gameState.setGameState(true);
 			ofSetFrameRate(30);
 		}
 	}
+}
+
+void ofApp::frameRateChanged(int& frameRate){
+	frameSpeed = frameRate;
 }
 
 //--------------------------------------------------------------
