@@ -12,23 +12,34 @@ void ofApp::setup(){
 
 	ofSetFrameRate(30);
 
-	frameRate.setup("Framerate: ", 4, 1, 8, 125, 20);
-	frameRate.setPosition(pixelGrid.width() / 2, pixelGrid.height() + 10);
+	gridSetup.setup("Grid Settings:");
+	gridSetup.add(columns.setup("Number of Columns:", 40, 30, 80));
+	gridSetup.add(rows.setup("Number of Rows:", 40, 20, 60));
+	gridSetup.setSize(200, 40);
 
-	frameRate.addListener(this, &ofApp::frameRateChanged);
+	frameSetup.setup("Frame Settings:");
+	frameSetup.add(framerate.setup("Set Framerate:", 4, 1, 8));
+	frameSetup.add(nextGen.setup("Next Gen"));
+	gridSetup.setSize(200, 40);
 
-	nextGen.setup("Next Gen", 100, 20);
-	nextGen.setPosition(20, pixelGrid.height() + 10);
+	framerate.addListener(this, &ofApp::framerateChanged);
 	nextGen.addListener(this, &ofApp::nextGenButton);
+	columns.addListener(this, &ofApp::columnsChanged);
+	rows.addListener(this, &ofApp::rowsChanged);
+
+	gridSetup.setPosition(grid.pixelSize, settingsArea.y + 10);
+	frameSetup.setPosition(frameSetup.getWidth() + grid.pixelSize * 2, settingsArea.y + 10);
+
+	textArea = ofRectangle(gridSetup.getWidth() + frameSetup.getWidth() + grid.pixelSize * 3, grid.height() + 10, 120, 60);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	ofSetWindowShape(pixelGrid.width(), pixelGrid.height() + 40);
-	 
+	ofSetWindowShape(grid.width(), grid.height() + settingsArea.getHeight());
+
 	if (!gameState.getGameState()) {
 		cells.update();
-		ofSetFrameRate(frameSpeed);
+		ofSetFrameRate(currentFramerate);
 		iteration++;
 	}
 }
@@ -37,11 +48,23 @@ void ofApp::update(){
 void ofApp::draw(){
 	cells.draw();
 
+	ofFill();
+	ofSetColor(200);
+	ofDrawRectangle(settingsArea);
+
+	ofSetColor(255);
+	ofDrawRectangle(textArea);
+
+	std::string iterationText = "Iteration: " + std::to_string(iteration);
+	std::string gameStateText = "Game State: " + gameState.getText();
+	textArea.setWidth(gameStateText.length() * 10 + 10);
+
 	ofSetColor(0);
-	ofDrawBitmapString("Iteration: " + std::to_string(iteration), pixelGrid.width() - 200, pixelGrid.height() + 20);
-	ofDrawBitmapString(gameState.getText(), 200, pixelGrid.height() + 20);
-	frameRate.draw();
-	nextGen.draw();
+	ofDrawBitmapString(iterationText, textArea.getX() + textArea.getWidth() / 2 - iterationText.length() * 4,  textArea.getY() + 20);
+	ofDrawBitmapString(gameStateText, textArea.getX() + textArea.getWidth() / 2 - gameStateText.length() * 4, textArea.getY() + textArea.getHeight() - 20);
+
+	frameSetup.draw();
+	gridSetup.draw();
 }
 
 //--------------------------------------------------------------
@@ -70,8 +93,8 @@ void ofApp::keyPressed(int key){
 	}
 }
 
-void ofApp::frameRateChanged(int& frameRate){
-	frameSpeed = frameRate;
+void ofApp::framerateChanged(int& framerate){
+	currentFramerate = framerate;
 }
 
 void ofApp::nextGenButton(){
@@ -79,6 +102,22 @@ void ofApp::nextGenButton(){
 		cells.update();
 		iteration++;
 	}
+}
+
+void ofApp::columnsChanged(int& columns) {
+	grid.setColumns(columns);
+	cells.columns = columns;
+	cells.clear();
+	settingsArea.setWidth(grid.width());
+}
+
+void ofApp::rowsChanged(int& rows) {
+	grid.setRows(rows);
+	cells.rows = rows;
+	cells.clear();
+	textArea.setY(grid.height());
+	gridSetup.setPosition(gridSetup.getWidth() / 10, settingsArea.y + gridSetup.getHeight() / 4);
+	frameSetup.setPosition(frameSetup.getWidth() + frameSetup.getWidth() / 10 * 2, settingsArea.y + frameSetup.getHeight() / 4);
 }
 
 //--------------------------------------------------------------

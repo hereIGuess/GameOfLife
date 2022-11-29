@@ -26,16 +26,28 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		ofxIntSlider frameRate;
-		void frameRateChanged(int& frameRate);
-		int frameSpeed = 4;
-
-		ofxButton nextGen;
+		void framerateChanged(int& framerate);
 		void nextGenButton();
+		void columnsChanged(int& columns);
+		void rowsChanged(int& rows);
+
+		//GUI VARIABLES
+		//used gui groups so they aren't moveable
+		ofxGuiGroup gridSetup;
+		ofxIntSlider columns;
+		ofxIntSlider rows;
+		ofxGuiGroup frameSetup;
+		ofxIntSlider framerate;
+		ofxButton nextGen;
+
+		int currentFramerate = 4;
 
 		Cells cells = Cells();
-		Grid pixelGrid = Grid();
+		Grid grid = Grid();
 		GameState gameState = GameState();
+
+		ofRectangle settingsArea = ofRectangle(0, grid.height(), grid.width(), 80);
+		ofRectangle textArea;
 
 		int iteration = 0;
 
