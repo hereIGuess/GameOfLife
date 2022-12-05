@@ -4,12 +4,18 @@
 //Space to play/pause
 //C to clear canvas
 //R to create a random seed
-//Button in lower left can only be pressed when game is paused
+//Next Gen button can only be pressed when game is paused
+
+//STAMP CONTROLS:
+//1 to select pulsar oscillator
+//2 to select penta-decathlon oscillator
+//3 to select glider spaceship
+//4 to select middle-weight spaceship
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(255);
-
+	ofSetLineWidth(2);
 	ofSetFrameRate(30);
 
 	gridSetup.setup("Grid Settings:");
@@ -69,13 +75,11 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
 	if (key == 114 && gameState.getGameState()) {
 		cells.randomSeed();
-		iteration = 0;
 	}
 
 	if (key == 99) {
 		gameState.setGameState(true);
-		iteration = 0;
-		cells.clear();
+		cells.reset();
 		key = 0;
 		ofSetFrameRate(30);
 	}
@@ -103,15 +107,17 @@ void ofApp::nextGenButton(){
 
 void ofApp::columnsChanged(int& columns) {
 	grid.setColumns(columns);
+	gameState.setGameState(true);
 	cells.columns = columns;
-	cells.clear();
+	cells.reset();
 	settingsArea.setWidth(grid.width());
 }
 
 void ofApp::rowsChanged(int& rows) {
 	grid.setRows(rows);
 	cells.rows = rows;
-	cells.clear();
+	gameState.setGameState(true);
+	cells.reset();
 	settingsArea.setY(grid.height());
 	textArea.setY(settingsArea.getY() + settingsArea.getHeight() / 2 - 30);
 	gridSetup.setPosition(grid.pixelSize, settingsArea.y + 10);
@@ -136,7 +142,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	if (gameState.getGameState()) {
-		cells.seeds(x, y);
+		cells.changeState(x, y);
 	}
 }
 
