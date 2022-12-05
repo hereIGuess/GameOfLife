@@ -180,6 +180,9 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\cells.cpp" />
+    <ClCompile Include="src\gameState.cpp" />
+    <ClCompile Include="src\grid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp" />
@@ -194,6 +197,9 @@
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\cells.h" />
+    <ClInclude Include="src\gamestate.h" />
+    <ClInclude Include="src\grid.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />
