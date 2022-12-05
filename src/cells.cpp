@@ -32,13 +32,12 @@ void Cells::randomSeed() {
 void Cells::changeState(int mouseX, int mouseY) {
 	for (int x = 0; x < columns; x++) {
 		for (int y = 0; y < rows; y++) {
+			//checks if mouse position is inside current cell
 			if (mouseX > x * pixelSize && mouseX < (x * pixelSize) + pixelSize &&
 				mouseY > y * pixelSize && mouseY < (y * pixelSize) + pixelSize) {
-				if (cells[y][x] == State::Alive) {
-					cells[y][x] = State::Dead;
-				} else {
-					cells[y][x] = State::Alive;
-				}
+				//if mouse is clicking cell, set cell to dead or alive depending on its current state
+				if (cells[y][x] == State::Alive) cells[y][x] = State::Dead;
+				else cells[y][x] = State::Alive;
 			}
 		}
 	}
@@ -73,10 +72,18 @@ void Cells::checkLife(int x, int y) {
 	if (y < rows - 1 && cells[y + 1][x] == State::Alive) aliveNeighbours++;
 
 	if (cells[y][x] == State::Alive) {
+		//if current cell is alive:
+		//if there are more than 3 alive neighbours, kill current cell
 		if (aliveNeighbours > 3) newGen[y][x] = State::Dead;
+
+		//if there are less than 2 alive neighbours, kill current cell
 		else if (aliveNeighbours < 2) newGen[y][x] = State::Dead;
+
+		//else keep current cell alive
 		else newGen[y][x] = State::Alive;
 	} else {
+		//if current cell is dead:
+		//if there is 3 alive neighbours, revive current cell
 		if (aliveNeighbours == 3) newGen[y][x] = State::Alive;
 	}
 }
