@@ -1,11 +1,12 @@
 #pragma once
 
-#include <vector>
 #include "ofMain.h"
+
+#include "ofxGui.h"
+#include "gamestate.h"
+
 #include "grid.h"
 #include "cells.h"
-#include "gamestate.h"
-#include "ofxGui.h"
 
 
 class ofApp : public ofBaseApp{

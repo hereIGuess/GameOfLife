@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class GameState {
 private:
@@ -6,19 +7,11 @@ private:
 	std::string text = "Paused";
 
 public:
-	bool getGameState() {
-		return paused;
-	}
+	bool getGameState();
 
-	void setGameState(bool newState) {
-		paused = newState;
-		if (paused) text = "Paused";
-		else text = "Playing";
-	}
+	void setGameState(bool newState);
 
-	std::string getText() {
-		return text;
-	}
+	std::string getText();
 
-	GameState() { }
+	GameState();
 };
