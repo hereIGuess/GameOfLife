@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "ofMain.h"
 #include "grid.h"
 #include "cells.h"
