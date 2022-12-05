@@ -40,6 +40,9 @@
     <ClCompile Include="src\cells.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\grid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">

@@ -2,28 +2,17 @@
 
 class Grid {
 public:
-	int rows;
-	int columns;
-	const int& pixelSize = 20;
+	int rows{ 40 };
+	int columns{ 40 };
+	const int& pixelSize{ 20 };
 
-	Grid() {
-		rows = 40;
-		columns = 40;
-	}
+	Grid();
 
-	void setColumns(int newColumns) {
-		columns = newColumns;
-	}
+	void setColumns(int newColumns);
 
-	void setRows(int newRows) {
-		rows = newRows;
-	}
+	void setRows(int newRows);
 
-	int height() {
-		return rows * pixelSize;
-	}
+	int height();
 
-	int width() {
-		return columns * pixelSize;
-	}
+	int width();
 };
