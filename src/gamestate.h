@@ -3,8 +3,8 @@
 
 class GameState {
 private:
-	bool paused = true;
-	std::string text = "Paused";
+	bool paused{ true };
+	std::string text{ "Paused" };
 
 public:
 	bool getGameState();
