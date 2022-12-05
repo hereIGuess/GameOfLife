@@ -43,8 +43,8 @@ class ofApp : public ofBaseApp{
 
 		int currentFramerate = 4;
 
-		Cells cells = Cells();
 		Grid grid = Grid();
+		Cells cells = Cells();
 		GameState gameState = GameState();
 
 		ofRectangle settingsArea = ofRectangle(0, grid.height(), grid.width(), 80);
