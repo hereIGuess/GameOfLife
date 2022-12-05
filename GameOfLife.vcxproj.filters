@@ -43,6 +43,9 @@
     <ClCompile Include="src\grid.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
